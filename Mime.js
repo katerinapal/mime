@@ -1,3 +1,8 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var mod_Mime = Mime;
 'use strict';
 
@@ -37,9 +42,11 @@ function Mime() {
  * @param map (Object) type definitions
  * @param force (Boolean) if true, force overriding of existing definitions
  */
-Mime.prototype.define = function(typeMap, force) {
+Mime.prototype.define = function (typeMap, force) {
   for (var type in typeMap) {
-    var extensions = typeMap[type].map(function(t) {return t.toLowerCase()});
+    var extensions = typeMap[type].map(function (t) {
+      return t.toLowerCase();
+    });
     type = type.toLowerCase();
 
     for (var i = 0; i < extensions.length; i++) {
@@ -51,13 +58,8 @@ Mime.prototype.define = function(typeMap, force) {
         continue;
       }
 
-      if (!force && (ext in this._types)) {
-        throw new Error(
-          'Attempt to change mapping for "' + ext +
-          '" extension from "' + this._types[ext] + '" to "' + type +
-          '". Pass `force=true` to allow this, otherwise remove "' + ext +
-          '" from the list of extensions for "' + type + '".'
-        );
+      if (!force && ext in this._types) {
+        throw new Error('Attempt to change mapping for "' + ext + '" extension from "' + this._types[ext] + '" to "' + type + '". Pass `force=true` to allow this, otherwise remove "' + ext + '" from the list of extensions for "' + type + '".');
       }
 
       this._types[ext] = type;
@@ -66,7 +68,7 @@ Mime.prototype.define = function(typeMap, force) {
     // Use first extension as default
     if (force || !this._extensions[type]) {
       var ext = extensions[0];
-      this._extensions[type] = (ext[0] != '*') ? ext : ext.substr(1)
+      this._extensions[type] = ext[0] != '*' ? ext : ext.substr(1);
     }
   }
 };
@@ -74,7 +76,7 @@ Mime.prototype.define = function(typeMap, force) {
 /**
  * Lookup a mime type based on extension
  */
-Mime.prototype.getType = function(path) {
+Mime.prototype.getType = function (path) {
   path = String(path);
   var last = path.replace(/^.*[/\\]/, '').toLowerCase();
   var ext = last.replace(/^.*\./, '').toLowerCase();
@@ -88,7 +90,7 @@ Mime.prototype.getType = function(path) {
 /**
  * Return file extension associated with a mime type
  */
-Mime.prototype.getExtension = function(type) {
+Mime.prototype.getExtension = function (type) {
   type = /^\s*([^;\s]*)/.test(type) && RegExp.$1;
   return type && this._extensions[type.toLowerCase()] || null;
 };
@@ -97,4 +99,5 @@ Mime.prototype.getExtension = function(type) {
  * @param typeMap [Object] Map of MIME type -> Array[extensions]
  * @param ...
  */
-export default mod_Mime;
+exports.default = mod_Mime;
+module.exports = exports.default;

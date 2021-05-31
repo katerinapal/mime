@@ -1,89 +1,100 @@
-import "../lite";
-import mod_Mime from "../Mime";
-import ext_chalk from "chalk";
-import ext_assert from "assert";
-import mod_indexjs from "..";
+"use strict";
+
+require("../lite");
+
+var _Mime = require("../Mime");
+
+var _Mime2 = _interopRequireDefault(_Mime);
+
+var _chalk = require("chalk");
+
+var _chalk2 = _interopRequireDefault(_chalk);
+
+var _assert = require("assert");
+
+var _assert2 = _interopRequireDefault(_assert);
+
+var _ = require("..");
+
+var _2 = _interopRequireDefault(_);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 'use strict';
 
-var mime = mod_indexjs;
+var mime = _2.default;
 var mimeTypes = require('../node_modules/mime-types');
-var assert = ext_assert;
-var chalk = ext_chalk;
+var assert = _assert2.default;
+var chalk = _chalk2.default;
 
-describe('class Mime', function() {
-  it('mime and mime/lite coexist', function() {
-    assert.doesNotThrow(function() {});
+describe('class Mime', function () {
+  it('mime and mime/lite coexist', function () {
+    assert.doesNotThrow(function () {});
   });
 
-  it('new constructor()', function() {
-    var Mime = mod_Mime;
+  it('new constructor()', function () {
+    var Mime = _Mime2.default;
 
-    var mime = new Mime(
-      {'text/a': ['a', 'a1']},
-      {'text/b': ['b', 'b1']}
-    );
+    var mime = new Mime({ 'text/a': ['a', 'a1'] }, { 'text/b': ['b', 'b1'] });
 
     assert.deepEqual(mime._types, {
       a: 'text/a',
       a1: 'text/a',
       b: 'text/b',
-      b1: 'text/b',
+      b1: 'text/b'
     });
 
     assert.deepEqual(mime._extensions, {
       'text/a': 'a',
-      'text/b': 'b',
+      'text/b': 'b'
     });
   });
 
-  it('define()', function() {
-    var Mime = mod_Mime;
+  it('define()', function () {
+    var Mime = _Mime2.default;
 
-    var mime = new Mime({'text/a': ['a']}, {'text/b': ['b']});
+    var mime = new Mime({ 'text/a': ['a'] }, { 'text/b': ['b'] });
 
-    assert.throws(function() {
-      mime.define({'text/c': ['b']});
+    assert.throws(function () {
+      mime.define({ 'text/c': ['b'] });
     });
 
-    assert.doesNotThrow(function() {
-      mime.define({'text/c': ['b']}, true);
+    assert.doesNotThrow(function () {
+      mime.define({ 'text/c': ['b'] }, true);
     });
 
     assert.deepEqual(mime._types, {
       a: 'text/a',
-      b: 'text/c',
+      b: 'text/c'
     });
 
     assert.deepEqual(mime._extensions, {
       'text/a': 'a',
       'text/b': 'b',
-      'text/c': 'b',
+      'text/c': 'b'
     });
   });
 
-  it('define() *\'ed types', function() {
-    var Mime = mod_Mime;
+  it('define() *\'ed types', function () {
+    var Mime = _Mime2.default;
 
-    var mime = new Mime(
-      {'text/a': ['*b']},
-      {'text/b': ['b']}
-    );
+    var mime = new Mime({ 'text/a': ['*b'] }, { 'text/b': ['b'] });
 
     assert.deepEqual(mime._types, {
-      b: 'text/b',
+      b: 'text/b'
     });
 
     assert.deepEqual(mime._extensions, {
       'text/a': 'b',
-      'text/b': 'b',
+      'text/b': 'b'
     });
   });
 
-  it ('case-insensitive', function() {
-    var Mime = mod_Mime;
-    const mime = new Mime({
+  it('case-insensitive', function () {
+    var Mime = _Mime2.default;
+    var mime = new Mime({
       'TEXT/UPPER': ['UP'],
-      'text/lower': ['low'],
+      'text/lower': ['low']
     });
 
     assert.equal(mime.getType('test.up'), 'text/upper');
@@ -97,7 +108,7 @@ describe('class Mime', function() {
     assert.equal(mime.getExtension('TEXT/LOWER'), 'low');
   });
 
-  it('getType()', function() {
+  it('getType()', function () {
     // Upper/lower case
     assert.equal(mime.getType('text.txt'), 'text/plain');
     assert.equal(mime.getType('TEXT.TXT'), 'text/plain');
@@ -135,7 +146,7 @@ describe('class Mime', function() {
     assert.strictEqual(mime.getType('.config.json'), 'application/json');
   });
 
-  it('getExtension()', function() {
+  it('getExtension()', function () {
     assert.equal(mime.getExtension('text/html'), 'html');
     assert.equal(mime.getExtension(' text/html'), 'html');
     assert.equal(mime.getExtension('text/html '), 'html');
@@ -148,28 +159,25 @@ describe('class Mime', function() {
   });
 });
 
-describe('DB', function() {
+describe('DB', function () {
   var diffs = [];
 
-  after(function() {
+  after(function () {
     if (diffs.length) {
       console.log('\n[INFO] The following inconsistencies with MDN (https://goo.gl/lHrFU6) and/or mime-types (https://github.com/jshttp/mime-types) are expected:');
-      diffs.forEach(function(d) {
-        console.warn(
-          '  ' + d[0]+ '[' + chalk.blue(d[1]) + '] = ' + chalk.red(d[2]) +
-          ', mime[' + d[1] + '] = ' + chalk.green(d[3])
-        );
+      diffs.forEach(function (d) {
+        console.warn('  ' + d[0] + '[' + chalk.blue(d[1]) + '] = ' + chalk.red(d[2]) + ', mime[' + d[1] + '] = ' + chalk.green(d[3]));
       });
     }
   });
 
-  it('Consistency', function() {
+  it('Consistency', function () {
     for (var ext in this.types) {
       assert.equal(ext, this.extensions[this.types[ext]], '${ext} does not have consistent ext->type->ext mapping');
     }
   });
 
-  it('MDN types', function() {
+  it('MDN types', function () {
     // MDN types listed at https://goo.gl/lHrFU6
     var MDN = {
       aac: 'audio/aac',
@@ -245,7 +253,7 @@ describe('DB', function() {
       zip: 'application/zip',
       '3gp': 'video/3gpp',
       '3g2': 'video/3gpp2',
-      '7z': 'application/x-7z-compressed',
+      '7z': 'application/x-7z-compressed'
     };
 
     for (var ext in MDN) {
@@ -261,7 +269,7 @@ describe('DB', function() {
     }
   });
 
-  it('Specific types', function() {
+  it('Specific types', function () {
     // Assortment of types we sanity check for good measure
     assert.equal(mime.getType('html'), 'text/html');
     assert.equal(mime.getType('js'), 'application/javascript');
@@ -273,7 +281,7 @@ describe('DB', function() {
     assert.equal(mime.getType('wasm'), 'application/wasm');
   });
 
-  it('Specific extensions', function() {
+  it('Specific extensions', function () {
     assert.equal(mime.getExtension('text/html;charset=UTF-8'), 'html');
     assert.equal(mime.getExtension('text/HTML; charset=UTF-8'), 'html');
     assert.equal(mime.getExtension('text/html; charset=UTF-8'), 'html');

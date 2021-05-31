@@ -1,19 +1,36 @@
 #!/usr/bin/env node
+"use strict";
 
-import ext_chalk from "chalk";
-import ext_mimedb from "mime-db";
-import ext_mimescore from "mime-score";
-import ext_path from "path";
-import ext_fs from "fs";
+var _chalk = require("chalk");
+
+var _chalk2 = _interopRequireDefault(_chalk);
+
+var _mimeDb = require("mime-db");
+
+var _mimeDb2 = _interopRequireDefault(_mimeDb);
+
+var _mimeScore = require("mime-score");
+
+var _mimeScore2 = _interopRequireDefault(_mimeScore);
+
+var _path = require("path");
+
+var _path2 = _interopRequireDefault(_path);
+
+var _fs = require("fs");
+
+var _fs2 = _interopRequireDefault(_fs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 'use strict';
 
-var fs = ext_fs;
-var path = ext_path;
-var mimeScore = ext_mimescore;
+var fs = _fs2.default;
+var path = _path2.default;
+var mimeScore = _mimeScore2.default;
 
-var db = ext_mimedb;
-var chalk = ext_chalk;
+var db = _mimeDb2.default;
+var chalk = _chalk2.default;
 
 var STANDARD_FACET_SCORE = 900;
 
@@ -25,7 +42,7 @@ for (var type in db) {
   entry.type = type;
   if (!entry.extensions) continue;
 
-  entry.extensions.forEach(function(ext) {
+  entry.extensions.forEach(function (ext) {
     var drop;
     var keep = entry;
     if (ext in byExtension) {
@@ -39,12 +56,11 @@ for (var type in db) {
       keep = e0.pri >= e1.pri ? e0 : e1;
 
       // Prefix lower-priority extensions with '*'
-      drop.extensions = drop.extensions.map(function(e) {return e == ext ? '*' + e : e});
+      drop.extensions = drop.extensions.map(function (e) {
+        return e == ext ? '*' + e : e;
+      });
 
-      console.log(
-        ext + ': Preferring ' + chalk.green(keep.type) + ' (' + keep.pri +
-        ') over ' + chalk.red(drop.type) + ' (' + drop.pri + ')' + ' for ' + ext
-      );
+      console.log(ext + ': Preferring ' + chalk.green(keep.type) + ' (' + keep.pri + ') over ' + chalk.red(drop.type) + ' (' + drop.pri + ')' + ' for ' + ext);
     }
 
     // Cache the hightest ranking type for this extension
@@ -61,7 +77,7 @@ function writeTypesFile(types, path) {
 var standard = {};
 var other = {};
 
-Object.keys(db).sort().forEach(function(k) {
+Object.keys(db).sort().forEach(function (k) {
   var entry = db[k];
 
   if (entry.extensions) {

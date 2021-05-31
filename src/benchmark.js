@@ -1,29 +1,34 @@
-import mod_litejs from "../lite";
-import mod_indexjs from "..";
-import ext_benchmark from "benchmark";
-const Benchmark = ext_benchmark;
-const mime = mod_indexjs;
-const mimeLite = mod_litejs;
+"use strict";
 
-const suite = new Benchmark.Suite();
+var _lite = require("../lite");
 
-const extensions = Object.keys(mime._types);
-let idx = 0;
+var _lite2 = _interopRequireDefault(_lite);
 
-suite
-  .add('mime.getType',
-    function() {
-      mime.getType(extensions[idx++]);
-      if (idx >= extensions.length) idx = 0;
-    }
-  )
-  .add('mimeLite.getType',
-    function() {
-      mimeLite.getType(extensions[idx++]);
-      if (idx >= extensions.length) idx = 0;
-    }
-  )
-  .on('cycle', function(event) {
-    console.log(String(event.target));
-  })
-  .run();
+var _ = require("..");
+
+var _2 = _interopRequireDefault(_);
+
+var _benchmark = require("benchmark");
+
+var _benchmark2 = _interopRequireDefault(_benchmark);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Benchmark = _benchmark2.default;
+var mime = _2.default;
+var mimeLite = _lite2.default;
+
+var suite = new Benchmark.Suite();
+
+var extensions = Object.keys(mime._types);
+var idx = 0;
+
+suite.add('mime.getType', function () {
+  mime.getType(extensions[idx++]);
+  if (idx >= extensions.length) idx = 0;
+}).add('mimeLite.getType', function () {
+  mimeLite.getType(extensions[idx++]);
+  if (idx >= extensions.length) idx = 0;
+}).on('cycle', function (event) {
+  console.log(String(event.target));
+}).run();
