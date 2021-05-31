@@ -1,3 +1,4 @@
+var mod_Mime = Mime;
 'use strict';
 
 /**
@@ -92,4 +93,8 @@ Mime.prototype.getExtension = function(type) {
   return type && this._extensions[type.toLowerCase()] || null;
 };
 
-module.exports = Mime;
+/**
+ * @param typeMap [Object] Map of MIME type -> Array[extensions]
+ * @param ...
+ */
+export default mod_Mime;

@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 
+import ext_chalk from "chalk";
+import ext_mimedb from "mime-db";
+import ext_mimescore from "mime-score";
+import ext_path from "path";
+import ext_fs from "fs";
+
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var mimeScore = require('mime-score');
+var fs = ext_fs;
+var path = ext_path;
+var mimeScore = ext_mimescore;
 
-var db = require('mime-db');
-var chalk = require('chalk');
+var db = ext_mimedb;
+var chalk = ext_chalk;
 
 var STANDARD_FACET_SCORE = 900;
 

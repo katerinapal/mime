@@ -1,6 +1,9 @@
-const Benchmark = require('benchmark');
-const mime = require('..');
-const mimeLite = require('../lite');
+import mod_litejs from "../lite";
+import mod_indexjs from "..";
+import ext_benchmark from "benchmark";
+const Benchmark = ext_benchmark;
+const mime = mod_indexjs;
+const mimeLite = mod_litejs;
 
 const suite = new Benchmark.Suite();
 

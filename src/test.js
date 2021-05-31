@@ -1,19 +1,22 @@
+import "../lite";
+import mod_Mime from "../Mime";
+import ext_chalk from "chalk";
+import ext_assert from "assert";
+import mod_indexjs from "..";
 'use strict';
 
-var mime = require('..');
+var mime = mod_indexjs;
 var mimeTypes = require('../node_modules/mime-types');
-var assert = require('assert');
-var chalk = require('chalk');
+var assert = ext_assert;
+var chalk = ext_chalk;
 
 describe('class Mime', function() {
   it('mime and mime/lite coexist', function() {
-    assert.doesNotThrow(function() {
-      require('../lite');
-    });
+    assert.doesNotThrow(function() {});
   });
 
   it('new constructor()', function() {
-    var Mime = require('../Mime');
+    var Mime = mod_Mime;
 
     var mime = new Mime(
       {'text/a': ['a', 'a1']},
@@ -34,7 +37,7 @@ describe('class Mime', function() {
   });
 
   it('define()', function() {
-    var Mime = require('../Mime');
+    var Mime = mod_Mime;
 
     var mime = new Mime({'text/a': ['a']}, {'text/b': ['b']});
 
@@ -59,7 +62,7 @@ describe('class Mime', function() {
   });
 
   it('define() *\'ed types', function() {
-    var Mime = require('../Mime');
+    var Mime = mod_Mime;
 
     var mime = new Mime(
       {'text/a': ['*b']},
@@ -77,7 +80,7 @@ describe('class Mime', function() {
   });
 
   it ('case-insensitive', function() {
-    var Mime = require('../Mime');
+    var Mime = mod_Mime;
     const mime = new Mime({
       'TEXT/UPPER': ['UP'],
       'text/lower': ['low'],

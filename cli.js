@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
+import mod_indexjs from ".";
+
 'use strict';
 
-var mime = require('.');
+var mime = mod_indexjs;
 var file = process.argv[2];
 var type = mime.getType(file);
 
