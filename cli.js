@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
+import { indexjs as mime } from ".";
+
 'use strict';
 
-var mime = require('.');
 var file = process.argv[2];
 var type = mime.getType(file);
 

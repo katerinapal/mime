@@ -1,4 +1,8 @@
+import { Mime as Mime_Mime } from "./Mime";
+import { standardjs } from "./types/standard";
+import { otherjs } from "./types/other";
 'use strict';
 
-var Mime = require('./Mime');
-module.exports = new Mime(require('./types/standard'), require('./types/other'));
+mod_indexjs = new Mime_Mime(standardjs, otherjs);
+var mod_indexjs;
+export { mod_indexjs as indexjs };
