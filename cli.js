@@ -1,11 +1,11 @@
 #!/usr/bin/env node
+'use strict';
 
-import { indexjs as mime } from ".";
+var _ = require('.');
 
 'use strict';
 
 var file = process.argv[2];
-var type = mime.getType(file);
+var type = _.indexjs.getType(file);
 
 process.stdout.write(type + '\n');
-

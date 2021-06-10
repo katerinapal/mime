@@ -1,10 +1,27 @@
 #!/usr/bin/env node
+"use strict";
 
-import ext_fs_fs from "fs";
-import ext_path_path from "path";
-import ext_mimeScore from "mime-score";
-import ext_db from "mime-db";
-import ext_chalk_chalk from "chalk";
+var _fs = require("fs");
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _path = require("path");
+
+var _path2 = _interopRequireDefault(_path);
+
+var _mimeScore = require("mime-score");
+
+var _mimeScore2 = _interopRequireDefault(_mimeScore);
+
+var _mimeDb = require("mime-db");
+
+var _mimeDb2 = _interopRequireDefault(_mimeDb);
+
+var _chalk = require("chalk");
+
+var _chalk2 = _interopRequireDefault(_chalk);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 'use strict';
 
@@ -13,31 +30,30 @@ var STANDARD_FACET_SCORE = 900;
 var byExtension = {};
 
 // Clear out any conflict extensions in mime-db
-for (var type in ext_db) {
-  var entry = ext_db[type];
+for (var type in _mimeDb2.default) {
+  var entry = _mimeDb2.default[type];
   entry.type = type;
   if (!entry.extensions) continue;
 
-  entry.extensions.forEach(function(ext) {
+  entry.extensions.forEach(function (ext) {
     var drop;
     var keep = entry;
     if (ext in byExtension) {
       var e0 = entry;
       var e1 = byExtension[ext];
 
-      e0.pri = ext_mimeScore(e0.type, e0.source);
-      e1.pri = ext_mimeScore(e1.type, e1.source);
+      e0.pri = (0, _mimeScore2.default)(e0.type, e0.source);
+      e1.pri = (0, _mimeScore2.default)(e1.type, e1.source);
 
       drop = e0.pri < e1.pri ? e0 : e1;
       keep = e0.pri >= e1.pri ? e0 : e1;
 
       // Prefix lower-priority extensions with '*'
-      drop.extensions = drop.extensions.map(function(e) {return e == ext ? '*' + e : e});
+      drop.extensions = drop.extensions.map(function (e) {
+        return e == ext ? '*' + e : e;
+      });
 
-      console.log(
-        ext + ': Preferring ' + ext_chalk_chalk.green(keep.type) + ' (' + keep.pri +
-        ') over ' + ext_chalk_chalk.red(drop.type) + ' (' + drop.pri + ')' + ' for ' + ext
-      );
+      console.log(ext + ': Preferring ' + _chalk2.default.green(keep.type) + ' (' + keep.pri + ') over ' + _chalk2.default.red(drop.type) + ' (' + drop.pri + ')' + ' for ' + ext);
     }
 
     // Cache the hightest ranking type for this extension
@@ -46,7 +62,7 @@ for (var type in ext_db) {
 }
 
 function writeTypesFile(types, path) {
-  ext_fs_fs.writeFileSync(path, 'module.exports = ' + JSON.stringify(types) + ';');
+  _fs2.default.writeFileSync(path, 'module.exports = ' + JSON.stringify(types) + ';');
 }
 
 // Segregate into standard and non-standard types based on facet per
@@ -54,11 +70,11 @@ function writeTypesFile(types, path) {
 var standard = {};
 var other = {};
 
-Object.keys(ext_db).sort().forEach(function(k) {
-  var entry = ext_db[k];
+Object.keys(_mimeDb2.default).sort().forEach(function (k) {
+  var entry = _mimeDb2.default[k];
 
   if (entry.extensions) {
-    if (ext_mimeScore(entry.type, entry.source) >= STANDARD_FACET_SCORE) {
+    if ((0, _mimeScore2.default)(entry.type, entry.source) >= STANDARD_FACET_SCORE) {
       standard[entry.type] = entry.extensions;
     } else {
       other[entry.type] = entry.extensions;
@@ -66,5 +82,5 @@ Object.keys(ext_db).sort().forEach(function(k) {
   }
 });
 
-writeTypesFile(standard, ext_path_path.join(__dirname, '../types', 'standard.js'));
-writeTypesFile(other, ext_path_path.join(__dirname, '../types', 'other.js'));
+writeTypesFile(standard, _path2.default.join(__dirname, '../types', 'standard.js'));
+writeTypesFile(other, _path2.default.join(__dirname, '../types', 'other.js'));
