@@ -1,8 +1,18 @@
-import { Mime as Mime_Mime } from "./Mime";
-import { standardjs } from "./types/standard";
-import { otherjs } from "./types/other";
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.indexjs = undefined;
+
+var _Mime = require("./Mime");
+
+var _standard = require("./types/standard");
+
+var _other = require("./types/other");
+
 'use strict';
 
-mod_indexjs = new Mime_Mime(standardjs, otherjs);
+exports.indexjs = mod_indexjs = new _Mime.Mime(_standard.standardjs, _other.otherjs);
 var mod_indexjs;
-export { mod_indexjs as indexjs };
+exports.indexjs = mod_indexjs;

@@ -1,7 +1,16 @@
-import { Mime as Mime_Mime } from "./Mime";
-import { standardjs } from "./types/standard";
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.litejs = undefined;
+
+var _Mime = require("./Mime");
+
+var _standard = require("./types/standard");
+
 'use strict';
 
-mod_litejs = new Mime_Mime(standardjs);
+exports.litejs = mod_litejs = new _Mime.Mime(_standard.standardjs);
 var mod_litejs;
-export { mod_litejs as litejs };
+exports.litejs = mod_litejs;
