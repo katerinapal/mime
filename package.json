@@ -1,52 +1,67 @@
 {
-  "author": {
-    "name": "Robert Kieffer",
-    "url": "http://github.com/broofa",
-    "email": "robert@broofa.com"
-  },
-  "engines": {
-    "node": ">=4.0.0"
-  },
-  "bin": {
-    "mime": "cli.js"
-  },
-  "contributors": [],
-  "description": "A comprehensive library for mime-type mapping",
-  "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "benchmark": "*",
-    "chalk": "4.1.0",
-    "eslint": "7.15.0",
-    "mime-db": "1.45.0",
-    "mime-score": "1.2.0",
-    "mime-types": "2.1.27",
-    "mocha": "8.2.1",
-    "runmd": "*",
-    "standard-version": "9.0.0"
-  },
-  "files": [
-    "index.js",
-    "lite.js",
-    "Mime.js",
-    "cli.js",
-    "/types"
-  ],
-  "scripts": {
-    "prepare": "node src/build.js && runmd --output README.md src/README_js.md",
-    "release": "standard-version",
-    "benchmark": "node src/benchmark.js",
-    "md": "runmd --watch --output README.md src/README_js.md",
-    "test": "mocha src/test.js"
-  },
-  "keywords": [
-    "util",
-    "mime"
-  ],
-  "name": "mime",
-  "repository": {
-    "url": "https://github.com/broofa/mime",
-    "type": "git"
-  },
-  "version": "2.4.7"
+    "author": {
+        "name": "Robert Kieffer",
+        "url": "http://github.com/broofa",
+        "email": "robert@broofa.com"
+    },
+    "engines": {
+        "node": ">=4.0.0"
+    },
+    "bin": {
+        "mime": "cli.js"
+    },
+    "contributors": [],
+    "description": "A comprehensive library for mime-type mapping",
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {
+        "benchmark": "*",
+        "chalk": "4.1.0",
+        "eslint": "7.15.0",
+        "mime-db": "1.45.0",
+        "mime-score": "1.2.0",
+        "mime-types": "2.1.27",
+        "mocha": "8.2.1",
+        "runmd": "*",
+        "standard-version": "9.0.0",
+        "babel-cli": "latest",
+        "babel-core": "latest",
+        "babel-plugin-add-module-exports": "latest",
+        "babel-plugin-transform-es2015-modules-commonjs": "latest",
+        "babel-polyfill": "latest",
+        "babel-plugin-transform-object-rest-spread": "latest",
+        "babel-preset-env": "latest"
+    },
+    "files": [
+        "index.js",
+        "lite.js",
+        "Mime.js",
+        "cli.js",
+        "/types"
+    ],
+    "scripts": {
+        "prepare": "node src/build.js && runmd --output README.md src/README_js.md",
+        "release": "standard-version",
+        "benchmark": "node src/benchmark.js",
+        "md": "runmd --watch --output README.md src/README_js.md",
+        "test": "mocha src/test.js",
+        "compile-src": "babel src --out-dir src --require babel-polyfill --presets env",
+        "compile-types": "babel types --out-dir types --require babel-polyfill --presets env",
+        "compile-clijs": "babel cli.js -o cli.js --require babel-polyfill --presets env",
+        "compile-litejs": "babel lite.js -o lite.js --require babel-polyfill --presets env",
+        "compile-Mimejs": "babel Mime.js -o Mime.js --require babel-polyfill --presets env",
+        "compile-indexjs": "babel index.js -o index.js --require babel-polyfill --presets env",
+        "compile-1_script": "npm run compile-src && npm run compile-types && npm run compile-clijs && npm run compile-litejs && npm run compile-Mimejs && npm run compile-indexjs",
+        "compile": "npm run compile-1_script"
+    },
+    "keywords": [
+        "util",
+        "mime"
+    ],
+    "name": "mime",
+    "repository": {
+        "url": "https://github.com/broofa/mime",
+        "type": "git"
+    },
+    "version": "2.4.7"
 }

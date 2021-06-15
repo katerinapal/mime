@@ -1,8 +1,8 @@
-const Benchmark = require('benchmark');
-const mime = require('..');
-const mimeLite = require('../lite');
+import ext_Benchmark from "benchmark";
+import { indexjs as mime } from "..";
+import { litejs as mimeLite } from "../lite";
 
-const suite = new Benchmark.Suite();
+const suite = new ext_Benchmark.Suite();
 
 const extensions = Object.keys(mime._types);
 let idx = 0;
